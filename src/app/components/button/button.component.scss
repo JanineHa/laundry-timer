@@ -1,0 +1,54 @@
+@import "/src/helpers/styles/variables.scss";
+.btn {
+  padding: 0.6em 1.8em;
+  color: $background-color;
+  background: $primary-color;
+  font-size: clamp(1.4rem, 2.5vw, 2.5rem);
+  border: 2px solid $primary-color;
+  border-radius: 1.5rem;
+  -webkit-box-shadow: 8px 8px 15px 1px rgba(0, 91, 85, 0.5),
+    inset 0px 0px 20px 10px rgba(0, 74, 69, 0.41);
+  box-shadow: 8px 8px 15px 1px rgba(0, 91, 85, 0.5),
+    inset 0px 0px 20px 10px rgba(0, 74, 69, 0.41);
+
+  &:hover {
+    background: $background-color;
+    color: $primary-color;
+    border: 2px solid $primary-color;
+    box-shadow: none;
+  }
+}
+.btn__toolbar {
+  min-width: 5vw;
+  padding: 0.4em 0.8em;
+  color: $accent-color;
+  background: $secondary-color;
+  border: 2px solid $secondary-color;
+  border-radius: 0.8rem;
+  font-size: clamp(0.6rem, 2.5vw, 1rem);
+  font-weight: 600;
+
+  &:hover {
+    background: $background-color;
+    border: 2px solid $accent-color;
+    box-shadow: none;
+  }
+}
+.btn__timer {
+  min-width: 5vw;
+  padding: 0.4em 0.8em;
+  color: $background-color;
+  background: $accent-color;
+  border: 1px solid $accent-color;
+  border-radius: 0.8rem;
+  font-size: clamp(0.8rem, 2.5vw, 1rem);
+  box-shadow: 8px 8px 15px 1px rgba(71, 19, 35, 0.5),
+    inset 0px 0px 20px 10px rgba(71, 19, 35, 0.41);
+
+  &:hover {
+    background: $background-color;
+    color: $accent-color;
+    border: 1px solid $accent-color;
+    box-shadow: none;
+  }
+}

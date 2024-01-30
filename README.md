@@ -14,6 +14,13 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
+## Start Application as PWA
+
+1 ng build
+2 http-server dist/laundry-timer/
+
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).

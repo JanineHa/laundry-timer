@@ -1,0 +1,85 @@
+/* .material-icons-outlined,
+.material-icons.material-icons--outlined,
+.material-icons-two-tone,
+.material-icons.material-icons--two-tone,
+.material-icons-round,
+.material-icons.material-icons--round,
+.material-icons-sharp,
+.material-icons.material-icons--sharp {
+  font-weight: normal;
+  font-style: normal;
+  font-size: 48px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+} */
+@import "/src/helpers/styles/variables.scss";
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.wave {
+  width: 100vw;
+  height: 3vw;
+  background: $background-color-section;
+  clip-path: polygon(
+    100% 100%,
+    0% 100%,
+    0% 86.67%,
+    5% 83.88%,
+    10% 76.3%,
+    15% 66.04%,
+    20% 55.95%,
+    25% 48.85%,
+    30% 46.71%,
+    35% 50.13%,
+    40% 58.15%,
+    45% 68.55%,
+    50% 78.42%,
+    55% 85.02%,
+    60% 86.51%,
+    65% 82.47%,
+    70% 74.03%,
+    75% 63.54%,
+    80% 53.92%,
+    85% 47.85%,
+    90% 47.02%,
+    95% 51.66%,
+    100% 60.49%
+  );
+}
+.wave-revert {
+  width: 100vw;
+  height: 3vw;
+  background: $background-color-section;
+  clip-path: polygon(
+    100% 0%,
+    0% 0%,
+    0% 86.67%,
+    5% 83.88%,
+    10% 76.3%,
+    15% 66.04%,
+    20% 55.95%,
+    25% 48.85%,
+    30% 46.71%,
+    35% 50.13%,
+    40% 58.15%,
+    45% 68.55%,
+    50% 78.42%,
+    55% 85.02%,
+    60% 86.51%,
+    65% 82.47%,
+    70% 74.03%,
+    75% 63.54%,
+    80% 53.92%,
+    85% 47.85%,
+    90% 47.02%,
+    95% 51.66%,
+    100% 60.49%
+  );
+}

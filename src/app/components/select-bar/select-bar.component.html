@@ -1,0 +1,45 @@
+<div class="selectBar">
+  <form
+    name="customForm"
+    id="custom"
+    #myForm="ngForm"
+    class="selectBar__column"
+  >
+    <div class="customForm__container">
+      <h3>Eigene Zeitangabe:</h3>
+      <input
+        type="text"
+        name="minutes"
+        placeholder="Minuten"
+        [(ngModel)]="inputMinutes"
+      />
+    </div>
+  </form>
+  <h2>Koch- & Buntwäsche</h2>
+  <div class="selectBar__column">
+    <app-button #timerK1 [btnClass]="'btn'" [btnName]="'90°'"></app-button>
+    <app-button #timerK2 [btnClass]="'btn'" [btnName]="'60°'"></app-button>
+    <app-button #timerK3 [btnClass]="'btn'" [btnName]="'40°'"></app-button>
+    <app-button #timerK4 [btnClass]="'btn'" [btnName]="'30°'"></app-button>
+  </div>
+  <h2>Pflegeleicht</h2>
+  <div class="selectBar__column">
+    <app-button #timerP1 [btnClass]="'btn'" [btnName]="'60°'"></app-button>
+    <app-button #timerP2 [btnClass]="'btn'" [btnName]="'40°'"></app-button>
+    <app-button #timerP3 [btnClass]="'btn'" [btnName]="'30°'"></app-button>
+  </div>
+  <h2>Sonstiges</h2>
+  <div class="selectBar__column">
+    <app-button
+      #timerS1
+      [btnClass]="'btn'"
+      [btnName]="'30 min Kurz'"
+    ></app-button>
+    <app-button #timerS1 [btnClass]="'btn'" [btnName]="'Kalt'"></app-button>
+    <app-button
+      #timerS1
+      [btnClass]="'btn'"
+      [btnName]="'Feinwäsche'"
+    ></app-button>
+  </div>
+</div>
