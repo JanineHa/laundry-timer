@@ -35,7 +35,7 @@
   }
 }
 .btn__timer {
-  min-width: 5vw;
+  min-width: -webkit-fill-available;
   padding: 0.4em 0.8em;
   color: $background-color;
   background: $accent-color;

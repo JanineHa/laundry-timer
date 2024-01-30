@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import {
   Subscription,
+  combineLatest,
   fromEvent,
   map,
   merge,
@@ -58,7 +59,7 @@ export class TimerDisplayComponent {
   );
   displayTimeLeft$ = this.countDown$.pipe(
     withLatestFrom(this.nowTo$),
-    //tap((secondsLeft) => console.log(secondsLeft)),
+    tap((secondsLeft) => console.log(secondsLeft)),
     map(([countdown, secondsLeft]) => secondsLeft - countdown),
     map((secondsLeft) => this.displayTimeLeft(secondsLeft))
   );

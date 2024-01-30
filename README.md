@@ -16,10 +16,8 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 ## Start Application as PWA
 
-1 ng build
-2 http-server dist/laundry-timer/
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+1. `ng build`
+2. `http-server dist/laundry-timer/`
 
 ## Running unit tests
 
