@@ -1,18 +1,12 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import {
   Subscription,
-  combineLatest,
+  filter,
   fromEvent,
+  interval,
   map,
-  merge,
-  of,
-  shareReplay,
-  startWith,
   switchMap,
-  take,
-  tap,
-  timer,
-  withLatestFrom,
+  tap
 } from 'rxjs';
 import { NotificationService } from 'src/app/services/notification.service';
 import { TimerService } from 'src/app/services/timer.service';
@@ -24,10 +18,13 @@ import { TimerService } from 'src/app/services/timer.service';
 })
 export class TimerDisplayComponent {
   @Input() permissionResult: string = '';
+
+  private sumSeconds: number = 0;
+
   constructor(
     private timerService: TimerService,
     private notificationService: NotificationService
-  ) {}
+  ) { }
   subscription = new Subscription();
 
   @ViewChild('hourPlus', { static: true, read: ElementRef })
@@ -51,6 +48,7 @@ export class TimerDisplayComponent {
 
   onAddHour(): void {
     console.log('clicked');
+    this.sumSeconds += 3600;
 
     /*  this.subscription.add(
       combineLatest(hourPlus$, this.displayTimeLeft$).subscribe(([seconds]) => {
@@ -59,20 +57,25 @@ export class TimerDisplayComponent {
       })
     ); */
   }
-  onSubstractHour() {}
+  onSubstractHour() {
+    this.sumSeconds -= 3600;
+    if (this.sumSeconds < 0) {
+      this.sumSeconds = 0;
+    }
+  }
   /*Timer logic*/
   oneSecond = 1000;
   isShowTime: boolean = true;
 
-  nowTo$ = this.timerService.seconds$.pipe(shareReplay(1));
+  nowTo$ = this.timerService.seconds$;
   countDown$ = this.nowTo$.pipe(
-    switchMap((seconds) => timer(0, this.oneSecond).pipe(take(seconds + 1)))
+    tap((seconds) => this.sumSeconds = seconds),
+    switchMap(() => interval(this.oneSecond)),
+    map(i => { const timeToDisplay = this.sumSeconds - i; return timeToDisplay >= 0 ? timeToDisplay : 0 }),
+    filter(i => i >= 0),
   );
 
   displayTimeLeft$ = this.countDown$.pipe(
-    withLatestFrom(this.nowTo$),
-    tap((secondsLeft) => console.log(secondsLeft)),
-    map(([countdown, secondsLeft]) => secondsLeft - countdown),
     map((secondsLeft) =>
       this.displayTimeLeft(secondsLeft, this.permissionResult)
     )
