@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { SwPush } from '@angular/service-worker';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +7,7 @@ import { SwPush } from '@angular/service-worker';
 })
 export class AppComponent {
   title = 'laundry-timer';
+  permissionResult: string = '';
   ngOnInit() {
     // Let's check if the browser supports notifications
     if (!('Notification' in window)) {
@@ -15,16 +15,11 @@ export class AppComponent {
     } else {
       Notification.requestPermission().then((result) => {
         console.log(result);
+        this.permissionResult = result;
         if (result === 'granted') {
-          this.createNotification();
+          console.log('Berechtigung erteilt');
         }
       });
     }
-  }
-
-  createNotification() {
-    const img = '/src/assets/icons/icon-128x128.png';
-    const text = `Die Waschemaschine ist fertig.`;
-    const notification = new Notification('Ende:', { body: text, icon: img });
   }
 }

@@ -64,10 +64,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "laundry-timer:build:production"
+              "buildTarget": "laundry-timer:build:production"
             },
             "development": {
-              "browserTarget": "laundry-timer:build:development"
+              "buildTarget": "laundry-timer:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -75,7 +75,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "laundry-timer:build"
+            "buildTarget": "laundry-timer:build"
           }
         },
         "test": {

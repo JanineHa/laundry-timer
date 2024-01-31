@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import {
   Subscription,
   combineLatest,
@@ -14,6 +14,7 @@ import {
   timer,
   withLatestFrom,
 } from 'rxjs';
+import { NotificationService } from 'src/app/services/notification.service';
 import { TimerService } from 'src/app/services/timer.service';
 
 @Component({
@@ -22,7 +23,11 @@ import { TimerService } from 'src/app/services/timer.service';
   styleUrls: ['./timer-display.component.scss'],
 })
 export class TimerDisplayComponent {
-  constructor(private timerService: TimerService) {}
+  @Input() permissionResult: string = '';
+  constructor(
+    private timerService: TimerService,
+    private notificationService: NotificationService
+  ) {}
   subscription = new Subscription();
 
   @ViewChild('hourPlus', { static: true, read: ElementRef })
@@ -57,21 +62,30 @@ export class TimerDisplayComponent {
   onSubstractHour() {}
   /*Timer logic*/
   oneSecond = 1000;
-  nowTo$ = this.timerService.seconds$.pipe(shareReplay(1));
+  isShowTime: boolean = true;
 
+  nowTo$ = this.timerService.seconds$.pipe(shareReplay(1));
   countDown$ = this.nowTo$.pipe(
     switchMap((seconds) => timer(0, this.oneSecond).pipe(take(seconds + 1)))
   );
+
   displayTimeLeft$ = this.countDown$.pipe(
     withLatestFrom(this.nowTo$),
     tap((secondsLeft) => console.log(secondsLeft)),
     map(([countdown, secondsLeft]) => secondsLeft - countdown),
-    map((secondsLeft) => this.displayTimeLeft(secondsLeft))
+    map((secondsLeft) =>
+      this.displayTimeLeft(secondsLeft, this.permissionResult)
+    )
   );
 
-  private displayTimeLeft(seconds: number = 0) {
+  private displayTimeLeft(seconds: number = 0, result: string = '') {
+    this.isShowTime = false;
     const minutes = Math.floor(seconds / 60);
     const remainderSeconds = seconds % 60;
+    if (remainderSeconds === 0 && result === 'granted') {
+      console.log('fertig');
+      this.notificationService.showNotification();
+    }
     return `${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`;
   }
   displayEndTime$ = this.nowTo$.pipe(
@@ -83,7 +97,7 @@ export class TimerDisplayComponent {
     const end = new Date(timestamp);
     const hour = end.getHours();
     const minutes = end.getMinutes();
-    if (minutes === 0) {
+    if (timestamp == 0) {
       return `Starte den Timer `;
     } else {
       return `Fertig um ${hour}:${minutes < 10 ? '0' : ''}${minutes} Uhr`;

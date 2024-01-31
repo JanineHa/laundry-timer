@@ -36,11 +36,11 @@ export class SelectBarComponent {
       30
     );
     const timerK3$ = this.createButtonObservable(
-      this.timerK1.nativeElement,
+      this.timerK3.nativeElement,
       40
     );
     const timerK4$ = this.createButtonObservable(
-      this.timerK2.nativeElement,
+      this.timerK4.nativeElement,
       50
     );
 
