@@ -12,8 +12,6 @@ export class TimerService {
   updateSeconds(seconds: number) {
     this.secondsSubject.next(seconds); //updates the numbers
   }
-  addSeconds(seconds: number) {
-    this.secondsSubject.next(seconds); //updates the numbers
-  }
+
   constructor() {}
 }

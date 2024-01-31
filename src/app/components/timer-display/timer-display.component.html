@@ -6,12 +6,14 @@
     <app-button
       #hourPlus
       class="display_hourPlus"
+      (click)="onAddHour()"
       [btnClass]="'btn__timer'"
       [btnName]="'+ 1h'"
     ></app-button>
     <app-button
       #hourMinus
       class="display_hourMinus"
+      (click)="onSubstractHour()"
       [btnClass]="'btn__timer'"
       [btnName]="'- 1h'"
     ></app-button>

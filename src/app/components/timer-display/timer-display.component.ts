@@ -42,14 +42,19 @@ export class TimerDisplayComponent {
       this.hourMinus.nativeElement,
       3600
     );
-    this.subscription.add(
-      merge(hourPlus$, hourMinus$).subscribe((seconds) => {
+  }
+
+  onAddHour(): void {
+    console.log('clicked');
+
+    /*  this.subscription.add(
+      combineLatest(hourPlus$, this.displayTimeLeft$).subscribe(([seconds]) => {
         this.timerService.updateSeconds(seconds); //updates view of timer
         console.log(`${seconds} seconds`);
       })
-    );
+    ); */
   }
-
+  onSubstractHour() {}
   /*Timer logic*/
   oneSecond = 1000;
   nowTo$ = this.timerService.seconds$.pipe(shareReplay(1));
@@ -78,7 +83,7 @@ export class TimerDisplayComponent {
     const end = new Date(timestamp);
     const hour = end.getHours();
     const minutes = end.getMinutes();
-    if (minutes == 0) {
+    if (minutes === 0) {
       return `Starte den Timer `;
     } else {
       return `Fertig um ${hour}:${minutes < 10 ? '0' : ''}${minutes} Uhr`;
