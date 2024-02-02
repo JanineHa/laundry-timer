@@ -1,23 +1,17 @@
 <div class="display">
   <h2>Verbleibende Zeit</h2>
   <div class="display__container">
-    <h1 *ngIf="isShowTime">
-      Start Timer <br />
-      with buttons
-    </h1>
     <h1 class="display__time-left">{{ displayTimeLeft$ | async }}</h1>
     <p class="display__end-time">{{ displayEndTime$ | async }}</p>
     <app-button
-      #hourPlus
-      class="display_hourPlus"
       (click)="onAddHour()"
+      class="display_hourPlus"
       [btnClass]="'btn__timer'"
       [btnName]="'+ 1h'"
     ></app-button>
     <app-button
-      #hourMinus
-      class="display_hourMinus"
       (click)="onSubstractHour()"
+      class="display_hourMinus"
       [btnClass]="'btn__timer'"
       [btnName]="'- 1h'"
     ></app-button>

@@ -8,8 +8,10 @@
     <div class="customForm__container">
       <h3>Eigene Zeitangabe:</h3>
       <input
-        type="text"
+        type="number"
         name="minutes"
+        min="1"
+        max="480"
         placeholder="Minuten"
         [(ngModel)]="inputMinutes"
       />

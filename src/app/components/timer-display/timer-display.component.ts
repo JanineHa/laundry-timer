@@ -1,11 +1,7 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import {
   Subscription,
-  filter,
-  fromEvent,
-  interval,
   map,
-  shareReplay,
   switchMap,
   take,
   tap,
@@ -22,74 +18,31 @@ import { TimerService } from 'src/app/services/timer.service';
 })
 export class TimerDisplayComponent {
   @Input() permissionResult: string = '';
-
-  private sumSeconds: number = 0;
+  isAddHour: Boolean = false;
+  isSubstractHour: Boolean = false;
+  private sumSecondsHour: number = 0;
+  subscription = new Subscription();
 
   constructor(
     private timerService: TimerService,
     private notificationService: NotificationService
   ) {}
-  subscription = new Subscription();
 
-  @ViewChild('hourPlus', { static: true, read: ElementRef })
-  hourPlus!: ElementRef<HTMLButtonElement>;
-  @ViewChild('hourMinus', { static: true, read: ElementRef })
-  hourMinus!: ElementRef<HTMLButtonElement>;
-
-  createButtonObservable(nativeElement: HTMLButtonElement, seconds: number) {
-    return fromEvent(nativeElement, 'click').pipe(map(() => seconds));
-  }
-  ngOnInit(): void {
-    const hourPlus$ = this.createButtonObservable(
-      this.hourPlus.nativeElement,
-      3600
-    );
-    const hourMinus$ = this.createButtonObservable(
-      this.hourMinus.nativeElement,
-      3600
-    );
-  }
-
-  onAddHour(): void {
-    console.log('clicked');
-    this.sumSeconds += 3600;
-
-    /*  this.subscription.add(
-      combineLatest(hourPlus$, this.displayTimeLeft$).subscribe(([seconds]) => {
-        this.timerService.updateSeconds(seconds); //updates view of timer
-        console.log(`${seconds} seconds`);
-      })
-    ); */
+  onAddHour() {
+    this.timerService.addSeconds(3600);
   }
   onSubstractHour() {
-    this.sumSeconds -= 3600;
-    if (this.sumSeconds < 0) {
-      this.sumSeconds = 0;
-    }
+    this.timerService.substractSeconds(3600);
   }
+
   /*Timer logic*/
   oneSecond = 1000;
-  isShowTime: boolean = true;
-  nowTo$ = this.timerService.seconds$.pipe(shareReplay(1));
-  //nowTo$ = this.timerService.seconds$;
+
+  //nowTo$ = this.timerService.seconds$.pipe(shareReplay(1));
+  nowTo$ = this.timerService.seconds$;
   countDown$ = this.nowTo$.pipe(
     switchMap((seconds) => timer(0, this.oneSecond).pipe(take(seconds + 1)))
   );
-  /*  countDown$ = this.nowTo$.pipe(
-    tap((seconds) => (this.sumSeconds = seconds)),
-    switchMap(() => interval(this.oneSecond)),
-    map((i) => {
-      const timeToDisplay = this.sumSeconds - i;
-      return timeToDisplay >= 0 ? timeToDisplay : 0;
-    }),
-    filter((i) => i >= 0)
-  ); */
-
-  /*  displayTimeLeft$ = this.countDown$.pipe(
-    map((secondsLeft) =>
-      this.displayTimeLeft(secondsLeft, this.permissionResult)
-    )
-  ); */
 
   displayTimeLeft$ = this.countDown$.pipe(
     withLatestFrom(this.nowTo$),
@@ -101,7 +54,6 @@ export class TimerDisplayComponent {
   );
 
   private displayTimeLeft(seconds: number = 0, result: string = '') {
-    this.isShowTime = false;
     const minutes = Math.floor(seconds / 60);
     const remainderSeconds = seconds % 60;
     if (remainderSeconds === 0 && result === 'granted') {
@@ -119,10 +71,7 @@ export class TimerDisplayComponent {
     const end = new Date(timestamp);
     const hour = end.getHours();
     const minutes = end.getMinutes();
-    if (timestamp == 0) {
-      return `Starte den Timer `;
-    } else {
-      return `Fertig um ${hour}:${minutes < 10 ? '0' : ''}${minutes} Uhr`;
-    }
+
+    return `Fertig um ${hour}:${minutes < 10 ? '0' : ''}${minutes} Uhr`;
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "laundry-timer",
   "short_name": "laundry-timer",
-  "theme_color": "#1976d2",
+  "theme_color": "#f7f1d7",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "./",

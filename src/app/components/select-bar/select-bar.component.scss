@@ -28,21 +28,25 @@
 
 .customForm__container {
   display: flex;
+  flex-direction: row;
   align-items: center;
   flex-wrap: wrap;
   justify-content: center;
   gap: 0.6rem;
   margin-bottom: 0.6rem;
-  //padding-top: 7rem;
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+  }
 
   h3 {
-    font-size: clamp(1.125rem, 2.5vw, 1.25rem);
+    font-size: clamp(1rem, 2.5vw, 1.1rem);
     text-transform: uppercase;
     color: $primary-color;
   }
 
-  input[type="text"] {
-    min-width: 32vw;
+  input[type="number"] {
+    min-width: 30vw;
     padding: 0.4rem 0.8rem;
     border: 2px solid $primary-color;
     border-radius: 0.7rem;
@@ -57,6 +61,9 @@
     &:hover {
       background: $background-color;
       color: $primary-color;
+    }
+    @media (max-width: 640px) {
+      min-width: 50vw;
     }
   }
 }

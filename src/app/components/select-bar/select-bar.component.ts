@@ -1,5 +1,13 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { Subscription, filter, fromEvent, map, merge, tap } from 'rxjs';
+import {
+  Subscription,
+  filter,
+  fromEvent,
+  map,
+  merge,
+  mergeAll,
+  tap,
+} from 'rxjs';
 import { TimerService } from 'src/app/services/timer.service';
 
 @Component({
