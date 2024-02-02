@@ -27,10 +27,7 @@ export class SelectBarComponent {
     return fromEvent(nativeElement, 'click').pipe(map(() => seconds));
   }
   ngOnInit(): void {
-    const timerK1$ = this.createButtonObservable(
-      this.timerK1.nativeElement,
-      20
-    );
+    const timerK1$ = this.createButtonObservable(this.timerK1.nativeElement, 5);
     const timerK2$ = this.createButtonObservable(
       this.timerK2.nativeElement,
       30

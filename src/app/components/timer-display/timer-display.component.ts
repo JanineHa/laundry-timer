@@ -5,8 +5,12 @@ import {
   fromEvent,
   interval,
   map,
+  shareReplay,
   switchMap,
-  tap
+  take,
+  tap,
+  timer,
+  withLatestFrom,
 } from 'rxjs';
 import { NotificationService } from 'src/app/services/notification.service';
 import { TimerService } from 'src/app/services/timer.service';
@@ -24,7 +28,7 @@ export class TimerDisplayComponent {
   constructor(
     private timerService: TimerService,
     private notificationService: NotificationService
-  ) { }
+  ) {}
   subscription = new Subscription();
 
   @ViewChild('hourPlus', { static: true, read: ElementRef })
@@ -66,16 +70,31 @@ export class TimerDisplayComponent {
   /*Timer logic*/
   oneSecond = 1000;
   isShowTime: boolean = true;
-
-  nowTo$ = this.timerService.seconds$;
+  nowTo$ = this.timerService.seconds$.pipe(shareReplay(1));
+  //nowTo$ = this.timerService.seconds$;
   countDown$ = this.nowTo$.pipe(
-    tap((seconds) => this.sumSeconds = seconds),
-    switchMap(() => interval(this.oneSecond)),
-    map(i => { const timeToDisplay = this.sumSeconds - i; return timeToDisplay >= 0 ? timeToDisplay : 0 }),
-    filter(i => i >= 0),
+    switchMap((seconds) => timer(0, this.oneSecond).pipe(take(seconds + 1)))
   );
+  /*  countDown$ = this.nowTo$.pipe(
+    tap((seconds) => (this.sumSeconds = seconds)),
+    switchMap(() => interval(this.oneSecond)),
+    map((i) => {
+      const timeToDisplay = this.sumSeconds - i;
+      return timeToDisplay >= 0 ? timeToDisplay : 0;
+    }),
+    filter((i) => i >= 0)
+  ); */
+
+  /*  displayTimeLeft$ = this.countDown$.pipe(
+    map((secondsLeft) =>
+      this.displayTimeLeft(secondsLeft, this.permissionResult)
+    )
+  ); */
 
   displayTimeLeft$ = this.countDown$.pipe(
+    withLatestFrom(this.nowTo$),
+    tap((secondsLeft) => console.log(secondsLeft)),
+    map(([countdown, secondsLeft]) => secondsLeft - countdown),
     map((secondsLeft) =>
       this.displayTimeLeft(secondsLeft, this.permissionResult)
     )
